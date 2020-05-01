@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <Title>Exercícios: Módulo 01</Title>
+</head>
+
+<body>
+    <script>
+        var endereco = {
+            rua: "Rua dos pinheiros",
+            numero: 1293,
+            bairro: "Centro",
+            cidade: "São Paulo",
+            uf: "SP"
+        };
+
+        function enderecocompleto(endereco){
+            return "O usuário mora em " + endereco.cidade +" / "+endereco.uf +
+                ", no bairro " + endereco.bairro + ", na " + endereco.rua + " nº " + endereco.numero;
+        }
+
+        console.log(enderecocompleto(endereco));
+    </script>
+</body>
+
+</html>
