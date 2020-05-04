@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 2</title>
+</head>
+
+<body>
+    <div id="ex">
+        <input type="text" name="user">
+        <button onclick="listRepositories()">Adicionar</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    var listElement = document.createElement('ul');
+    function renderRepositories(repositories) {
+        for (repo of repositories) {
+            var nomeElement = document.createElement("li")
+            var textonome = document.createTextNode(repo.name);
+
+            nomeElement.appendChild(textonome);
+            listElement.appendChild(nomeElement);
+
+            var criarLista = document.querySelector('#ex');
+            criarLista.appendChild(listElement);
+        }
+    }
+
+    function listRepositories() {
+        var user = document.querySelector('input').value;
+
+        if (!user) return;
+
+        axios.get('https://api.github.com/users/' + user + '/repos')
+            .then(function (response) {
+                renderRepositories(response.data);
+            })
+    }
+</script>
+
+</html>
