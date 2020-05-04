@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 2</title>
+</head>
+
+<body>
+    <div id="ex">
+        <input type="text" name="user">
+        <button onclick="listRepositories()">Adicionar</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var criarLista = document.querySelector('#ex');
+    var listElement = document.createElement('ul');
+
+    function renderRepositories(repositories) {
+        listElement.innerHTML = "";
+        for (repo of repositories) {
+            var nomeElement = document.createElement("li")
+            var textonome = document.createTextNode(repo.name);
+
+            nomeElement.appendChild(textonome);
+            listElement.appendChild(nomeElement);
+            criarLista.appendChild(listElement);
+        }
+    }
+
+    function renderLoading(loading) {
+        listElement.innerHTML = "";
+
+        var textElement = document.createTextNode('Carregando...');
+        var loadingElement = document.createElement('li');
+
+        loadingElement.appendChild(textElement);
+        listElement.appendChild(loadingElement);
+        criarLista.appendChild(listElement);
+    }
+
+    function renderError(loading) {
+        listElement.innerHTML = "";
+
+        var textElement = document.createTextNode('Erro!');
+        var errorElement = document.createElement('li');
+
+        errorElement.style.color = "#F00";
+        errorElement.appendChild(textElement);
+        listElement.appendChild(errorElement);
+        criarLista.appendChild(listElement);
+    }
+
+    function listRepositories() {
+        var user = document.querySelector('input').value;
+
+        if (!user) return;
+        renderLoading();
+        axios.get('https://api.github.com/users/' + user + '/repos')
+            .then(function (response) {
+                renderRepositories(response.data);
+            })
+            .catch(function () {
+                renderError();
+            });
+    }
+</script>
+
+</html>
